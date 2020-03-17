@@ -5,4 +5,4 @@ class Messages extends BaseModel {
 
 }
 
-module.exports = Messages;
+module.exports = new Messages('messages');

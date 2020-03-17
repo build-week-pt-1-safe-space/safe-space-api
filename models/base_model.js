@@ -12,7 +12,7 @@ class Model {
     getBy(filter) {
         if(!filter) return [ "No Filter Found" ];
 
-        return db(this.name).where(filter);
+        return db(this.name).where(filter).first();
     }
 
     async insert(data) {

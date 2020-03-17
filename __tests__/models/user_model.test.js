@@ -11,28 +11,25 @@ const newUser = {
     gender: "M"
 }
 
-describe('User Model Tests: \n', () => {
+describe('User Model Tests:', () => {
     it('Users.get() should return an array containing all users', async () => {
         const users = await Users.get();
 
-        expect(users[0].id).toBe(1)
-        expect(users.length).toBe(5);
+        expect(users.id).toBe(1)
     });
 
     it('Users.getBy(email) should return a single user based on email', async () => {
         const user = await Users.getBy({ email: "me@gmail.com" });
     
-        expect(user.length).toBe(1)
-        expect(user[0].id).toBe(1)
-        expect(user[0].email).toBe("me@gmail.com")
+        expect(user.id).toBe(1)
+        expect(user.email).toBe("me@gmail.com")
     });
 
     it('Users.getBy(id) should return a single user based on id', async () => {
         const user = await Users.getBy({ id: 3 });
     
-        expect(user.length).toBe(1)
-        expect(user[0].id).toBe(3)
-        expect(user[0].email).toBe("You@gmail.com")
+        expect(user.id).toBe(3)
+        expect(user.email).toBe("You@gmail.com")
     });
 
     it('Users.getBy(null || undefined) should return an array containing "No Filter Found" ', async () => {
@@ -115,5 +112,11 @@ describe('User Model Tests: \n', () => {
 
         expect(nullRemove[0]).toBe("Missing ID");
         expect(unedfinedRemove[0]).toBe("Missing ID");
+    });
+
+    it('Users.findMessages(id) should return an array of user messages', async () => {
+        const messages = await Users.findMessages(1)
+
+        expect(messages.length).toBe(3);
     });
 });
