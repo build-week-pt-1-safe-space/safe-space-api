@@ -2,7 +2,7 @@ const Users = require('../../models/users_model');
 const db = require('../../data/dbConfig');
 
 const newUser = { 
-    email: "Something_new@gmail.com", 
+    email: "Something_new5@gmail.com", 
     first_name: "Bobby", 
     last_name: "Boy", 
     password: "something", 
@@ -15,14 +15,14 @@ describe('User Model Tests:', () => {
     it('Users.get() should return an array containing all users', async () => {
         const users = await Users.get();
 
-        expect(users.id).toBe(1)
+        expect(users[0].id).toBe(2)
     });
 
     it('Users.getBy(email) should return a single user based on email', async () => {
-        const user = await Users.getBy({ email: "me@gmail.com" });
+        const user = await Users.getBy({ email: "alsome@gmail.com" });
     
-        expect(user.id).toBe(1)
-        expect(user.email).toBe("me@gmail.com")
+        expect(user.id).toBe(2)
+        expect(user.email).toBe("alsome@gmail.com")
     });
 
     it('Users.getBy(id) should return a single user based on id', async () => {
@@ -45,15 +45,15 @@ describe('User Model Tests:', () => {
     
         const users = await db('users')
 
-        expect(users.length).toBe(6);
+        expect(users.length).toBe(5);
 
-        await db('users').where({ id: users[5].id }).del();
+        await db('users').where({ id: users[4].id }).del();
     });
 
     it('Users.insert(user) should return the new user object', async () => {
         const addedUser = await Users.insert(newUser)
 
-        expect(addedUser.email).toBe("Something_new@gmail.com");
+        expect(addedUser.email).toBe("Something_new5@gmail.com");
 
         await db('users').where({ id: addedUser.id }).del();
     });
@@ -103,7 +103,7 @@ describe('User Model Tests:', () => {
 
         const users = await Users.get();
 
-        expect(users.length).toBe(5);
+        expect(users.length).toBe(4);
     });
 
     it('Users.remove(null || undefined) should return an array containing "Missing ID"', async () => {
@@ -115,7 +115,7 @@ describe('User Model Tests:', () => {
     });
 
     it('Users.findMessages(id) should return an array of user messages', async () => {
-        const messages = await Users.findMessages(1)
+        const messages = await Users.findMessages(2)
 
         expect(messages.length).toBe(3);
     });

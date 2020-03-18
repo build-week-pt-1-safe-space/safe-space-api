@@ -18,8 +18,7 @@ describe('Message Model Tests:', () => {
     it('Messages.getBy(id) should return a single message based on id', async () => {
         const message = await Messages.getBy({ id: 3 });
     
-        expect(message.length).toBe(1)
-        expect(message[0].id).toBe(3)
+        expect(message.id).toBe(3)
     });
 
     it('Messages.getBy(null || undefined) should return an array containing "No Filter Found" ', async () => {
