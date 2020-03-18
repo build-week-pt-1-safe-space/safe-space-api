@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
 
         res.status(200).json(messages);
     } catch(err) {
-        res.status(500).json({ error: "Failed To Retrieve Messages": message: err });
+        res.status(500).json({ error: "Failed To Retrieve Messages", message: err });
     }
 });
 
