@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Users = require('../models/users_model');
 
+const missing_id = require('../utils/requests/missing_id');
+
 router.get('/', async (req, res) => {
     try {
         const users = await Users.get();
@@ -13,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        if(Number.isNaN(Number(req.params.id))) res.status(400).json({ error: "Missing ID", value: req.params.id });
+        if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
 
         const user_id = { id: Number(req.params.id)};
         const user = await Users.getBy(user_id);
@@ -26,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        if(Number.isNaN(Number(req.params.id))) res.status(400).json({ error: "Missing ID", value: req.params.id });
+        if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
         if(!req.body) res.status(400).json({ error: "Missing Update", value: req.body })
 
         const user_id = Number(req.params.id);
@@ -42,7 +44,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        if(Number.isNaN(Number(req.params.id))) res.status(400).json({ error: "Missing ID", value: req.params.id });
+        if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
 
         const user_id = Number(req.params.id);
         const removalMessage = await Users.remove(user_id);

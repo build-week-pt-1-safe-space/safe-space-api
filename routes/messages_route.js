@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Messages = require('../models/messages_model');
 
+const missing_id = require('../utils/requests/missing_id');
+
 router.get('/', async (req, res) => {
     try {
         const messages = await Messages.get();
@@ -13,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        if(typeof req.params.id !== 'Number') res.status(400).json({ error: "Missing ID", value: req.params.id });
+        if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
 
         const message_id = req.params.id;
         const message = await Messages.findBy(message_id);
@@ -39,7 +41,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        if(typeof req.params.id !== 'Number') res.status(400).json({ error: "Missing ID", value: req.params.id });
+        if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
         if(!req.body) res.status(400).json({ error: "Missing Update", value: req.body })
 
         const message_id = req.params.id;
@@ -55,7 +57,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     try {
-        if(typeof req.params.id !== 'Number') res.status(400).json({ error: "Missing ID", value: req.params.id });
+        if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
 
         const message_id = req.params.id;
         const removal_message = await Messages.remove(message_id);
