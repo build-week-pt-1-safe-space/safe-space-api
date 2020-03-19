@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Messages = require('../models/messages_model');
 
 const missing_id = require('../utils/requests/missing_id');
+const timestamp_message = require('../utils/time/timestamp_message');
 
 router.get('/', async (req, res) => {
     try {
@@ -17,11 +18,12 @@ router.get('/:id', async (req, res) => {
     try {
         if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
 
-        const message_id = req.params.id;
-        const message = await Messages.findBy(message_id);
+        const message_id = Number(req.params.id);
+        const message = await Messages.getBy({ id: message_id });
 
         res.status(200).json(message);
     } catch (err) {
+        console.log(err)
         res.status(500).json({ error: "Failed To Retrieve Message", message: err })
     }
 });
@@ -31,10 +33,14 @@ router.post('/', async (req, res) => {
         if(!req.body) res.status(400).json({ error: "Missing Data", value: req.body });
 
         const messageData = req.body;
+
+        timestamp_message( messageData );
+
         const addedMessage = await Messages.insert(messageData);
 
         res.status(201).json(addedMessage);
     } catch(err) {
+        console.log(err)
         res.status(500).json({error: "Failure to Add Message", message: err})
     }
 });
