@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const Users = require('../models/users_model');
 
-const hashNewPassword = require('../utils/authentication/hashNewPassword');
-const validatePassword = require('../utils/authentication/validatePassword');
-const generateToken = require('../utils/authentication/generateToken');
+const hashNewPassword = require('../utils/authentication/hash_new_password');
+const validatePassword = require('../utils/authentication/validate_password');
+const generateToken = require('../utils/authentication/generate_token');
 
 router.post('/register', async (req, res) => {
     try {
