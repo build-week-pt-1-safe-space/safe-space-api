@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const Users = require('../models/users_model');
-
 const missing_id = require('../utils/requests/missing_id');
 
 router.get('/', async (req, res) => {
@@ -9,6 +8,7 @@ router.get('/', async (req, res) => {
 
         res.status(200).json(users);
     } catch (err) {
+        console.log(err)
         res.status(500).json({ error: "Failed To Retrieve Users", message: err });
     }
 });
@@ -19,9 +19,12 @@ router.get('/:id', async (req, res) => {
 
         const user_id = { id: Number(req.params.id)};
         const user = await Users.getBy(user_id);
+        const user_messages = await Users.findMessages(user_id.id)
 
+        user.messages = user_messages;
         res.status(200).json(user);
     } catch (err) {
+        console.log(err)
         res.status(500).json({ error: "Failed To Retrieve Users", message: err });
     }
 });
