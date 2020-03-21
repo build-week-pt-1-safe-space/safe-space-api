@@ -47,9 +47,9 @@ router.delete('/:id', async (req, res) => {
         if(missing_id(req.params.id)) res.status(400).json({ error: "Missing ID", value: req.params.id });
 
         const user_id = Number(req.params.id);
-        const removalMessage = await Users.remove(user_id);
+        const removal_message = await Users.remove(user_id);
 
-        res.status(200).json(removalMessage);
+        res.status(200).json(removal_message);
     } catch (err) {
         res.status(500).json({ message: "Failed To Delete", message: err });
     }
