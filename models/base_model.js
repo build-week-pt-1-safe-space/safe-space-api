@@ -19,7 +19,7 @@ class Model {
         if(!data) return [ "Missing Data" ]
 
         const id = await db(this.name).insert(data);
-
+        console.log(id)
         return db(this.name).where({ id }).first();
     }
 
