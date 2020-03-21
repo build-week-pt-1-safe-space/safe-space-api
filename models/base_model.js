@@ -18,9 +18,9 @@ class Model {
     async insert(data) {
         if(!data) return [ "Missing Data" ]
 
-        const id = await db(this.name).insert(data);
-        console.log(id)
-        return db(this.name).where({ id }).first();
+        const result = await db(this.name).insert(data);
+        
+        return result;
     }
 
     async update(id, data) {
